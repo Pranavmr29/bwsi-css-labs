@@ -8,6 +8,39 @@ The script asks the user to input the numbers and the operation to be performed,
 and prints the result to the terminal window.
 
 """
+def get_valid_operation(prompt: str):
+    """
+    Function to get a valid operation input from the user. It will keep asking until a valid operation is entered.
+
+    Args:
+        prompt (str): The prompt message to display to the user.
+
+    Returns:
+        str: The valid operation entered by the user.
+    """
+    valid_operations = {"add", "subtract", "multiply", "divide"}
+    while True:
+        operation = input(prompt).strip().lower()
+        if operation in valid_operations:
+            return operation
+        else:
+            print("Invalid operation. Please choose from 'add', 'subtract', 'multiply', or 'divide'.")
+def get_clean_num(prompt: str):
+    """
+    Function to get a clean number input from the user. It will keep asking until a valid number is entered.
+
+    Args:
+        prompt (str): The prompt message to display to the user.
+
+    Returns:
+        float: The valid number entered by the user.
+    """
+    while True:
+        try:
+            num = float(input(prompt))
+            return num
+        except ValueError:
+            print("Invalid input. Please enter a valid number.")
 
 def simple_calculator(operation: str, num1: float, num2: float) -> float:
     """
@@ -36,15 +69,16 @@ def simple_calculator(operation: str, num1: float, num2: float) -> float:
             raise ValueError("Cannot divide by zero.")
     else:
         raise ValueError("Invalid operation. Please choose from 'add', 'subtract', 'multiply', or 'divide'.")
+    
 
 def main():
     
     print(f"===== Simple Calculator =====")
 
     # Ask the user for sample input    
-    num1 = float(input("Enter the first number: "))
-    num2 = float(input("Enter the second number: "))
-    operation = input("Enter the operation (add, subtract, multiply, divide): ").strip().lower()
+    num1 = get_clean_num("Enter the first number: ")
+    num2 = get_clean_num("Enter the second number: ")
+    operation = get_valid_operation("Enter the operation (add, subtract, multiply, divide): ")
 
     # Perform the calculation and display the result
     result = simple_calculator(operation, num1, num2)
